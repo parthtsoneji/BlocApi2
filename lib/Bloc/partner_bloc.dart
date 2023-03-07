@@ -11,12 +11,12 @@ part 'partner_event.dart';
 part 'partner_state.dart';
 
 class PartnerBloc extends Bloc<PartnerEvent, PartnerState> {
-  final PostApi post;
-  PartnerBloc(this.post) : super(PartnerLoadingState()) {
+  final PartnerApi partner;
+  PartnerBloc(this.partner) : super(PartnerLoadingState()) {
     on<PartnerEvent>((event, emit) async {
       emit(PartnerLoadingState());
       try {
-        var apiCall = await post.postData();
+        var apiCall = await partner.postApi();
         emit(PartnerLoadedState(apiCall!));
       } catch (e) {
         emit(PartnerErrorState(e.toString()));

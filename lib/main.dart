@@ -22,53 +22,53 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BlocProvider(create: (context) => PartnerBloc(PostApi()),
-      child: Scaffold(
-        body: _PartnerDetails(),
-      )),
+      home: BlocProvider(create: (context) => PartnerBloc(PartnerApi()),
+          child: Scaffold(
+            body: _PartnerDetails(),
+          )),
     );
   }
 
   _PartnerDetails() {
-    return BlocProvider(create: (context) => PartnerBloc(PostApi())..add(PartnerLoadEvent()),
-    child: BlocBuilder<PartnerBloc,PartnerState>(
-      builder: (context, state)
-    {
-      if (state is PartnerLoadingState) {
-        return const Center(child: CircularProgressIndicator());
-      };
-      if (state is PartnerLoadedState) {
-        PostsApi list = state.loaded;
-        print(list);
-        return ListView.builder(
-            itemCount: list.posts!.length,
-            itemBuilder: (_, index) {
-              return Padding(
-                padding:
-                const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                child: Card(
-                    child: ListTile(
-                      title: Text(
-                        list.posts![index].category.toString(),
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                      trailing: Text(
-                          list.posts![index].isReported.toString(),
-                          style: const TextStyle(color: Colors.black)),
-                      subtitle: Text(
-                        list.posts![index].address.toString(),
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                      leading: Text(
-                        list.posts![index].bookByMe.toString(),
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    )),
-              );
-            });
-      }
-      return const Text("Something wrong");
-      },
-    ));
+    return BlocProvider(create: (context) => PartnerBloc(PartnerApi())..add(PartnerLoadEvent()),
+        child: BlocBuilder<PartnerBloc,PartnerState>(
+          builder: (context, state)
+          {
+            if (state is PartnerLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            };
+            if (state is PartnerLoadedState) {
+              Partner list = state.loaded;
+              print(list);
+              return ListView.builder(
+                  itemCount: list.data!.partners!.length,
+                  itemBuilder: (_, index) {
+                    return Padding(
+                      padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                      child: Card(
+                          child: ListTile(
+                            title: Text(
+                              list.status.toString(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            trailing: Text(
+                                list.count.toString(),
+                                style: const TextStyle(color: Colors.black)),
+                            subtitle: Text(
+                              list.data!.partners![index].name.toString(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            leading: Text(
+                              list.data!.partners![index].email.toString(),
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          )),
+                    );
+                  });
+            }
+            return const Text("Something wrong");
+          },
+        ));
   }
 }

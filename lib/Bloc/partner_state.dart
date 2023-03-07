@@ -12,7 +12,7 @@ class PartnerLoadingState extends PartnerState {
 
 class PartnerLoadedState extends PartnerState{
 
-  final PostsApi loaded;
+  final Partner loaded;
 
   PartnerLoadedState(this.loaded);
   @override
