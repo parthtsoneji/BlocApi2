@@ -1,5 +1,4 @@
 import 'package:bloc3/Apical/Repository.dart';
-import 'package:bloc3/Model/Partner_Model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,58 +16,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int index = 0;
+  bool gest = false;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: BlocProvider(create: (context) => PartnerBloc(PartnerApi()),
           child: Scaffold(
-            body: _PartnerDetails(),
-          )),
-    );
+            body: Center(
+              child: GestureDetector(
+                  onTap: () {
+                      BlocProvider.of(context)
+                    },
+                  child: Container(
+                      color: Colors.red,
+                      child: Text("Click here"))),
+            ),
+            ),
+          ));
   }
 
-  _PartnerDetails() {
-    return BlocProvider(create: (context) => PartnerBloc(PartnerApi())..add(PartnerLoadEvent()),
-        child: BlocBuilder<PartnerBloc,PartnerState>(
-          builder: (context, state)
-          {
-            if (state is PartnerLoadingState) {
-              return const Center(child: CircularProgressIndicator());
-            };
-            if (state is PartnerLoadedState) {
-              Partner list = state.loaded;
-              print(list);
-              return ListView.builder(
-                  itemCount: list.data!.partners!.length,
-                  itemBuilder: (_, index) {
-                    return Padding(
-                      padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                      child: Card(
-                          child: ListTile(
-                            title: Text(
-                              list.status.toString(),
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                            trailing: Text(
-                                list.count.toString(),
-                                style: const TextStyle(color: Colors.black)),
-                            subtitle: Text(
-                              list.data!.partners![index].name.toString(),
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                            leading: Text(
-                              list.data!.partners![index].email.toString(),
-                              style: const TextStyle(color: Colors.black),
-                            ),
-                          )),
-                    );
-                  });
-            }
-            return const Text("Something wrong");
-          },
-        ));
-  }
 }

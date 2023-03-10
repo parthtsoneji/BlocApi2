@@ -6,5 +6,8 @@ abstract class PartnerEvent extends Equatable {
 class PartnerLoadEvent extends PartnerEvent{
   @override
   List<Object?> get props => [];
-
+}
+class PartnerclickEvent extends PartnerEvent{
+  @override
+  List<Object?> get props => [];
 }

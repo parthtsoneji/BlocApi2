@@ -7,7 +7,7 @@ import '../Model/Partner_Model.dart';
 class PartnerApi {
   Partner? data;
 
-  Future<Partner?> postApi() async {
+  Future<Partner?> PartnerApiii() async {
     String api = "https://coupinos-app.azurewebsites.net/partners/list";
     Map postBody = {
       "radius": 10,
